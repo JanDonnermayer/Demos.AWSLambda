@@ -4,7 +4,7 @@
 
 ### Install AWS SAM CLI
 
-[Windows](https://github.com/awslabs/aws-sam-cli/releases/latest/download/AWS_SAM_CLI_64_PY3.msi)
+[Windows Installer](https://github.com/awslabs/aws-sam-cli/releases/latest/download/AWS_SAM_CLI_64_PY3.msi)
 
 ### Create AWS IAM Admin
 
