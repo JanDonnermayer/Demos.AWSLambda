@@ -14,32 +14,14 @@ namespace HelloWorld
 {
     public class Function
     {
-        private static readonly HttpClient client = new HttpClient();
-
-        private static async Task<string> GetLocation()
-        {
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Add("User-Agent", "AWS Lambda .Net Client");
-
-            var location = await client
-                .GetStringAsync("http://checkip.amazonaws.com/")
-                .ConfigureAwait(false);
-
-            return location.Replace("\n","");
-        }
-
         public async Task<APIGatewayProxyResponse> FunctionHandler(
             APIGatewayProxyRequest request,
             ILambdaContext context
         )
         {
-            var location = await GetLocation()
-                .ConfigureAwait(false);
-
             var body = new Dictionary<string, string>
             {
                 { "message", "hello world" },
-                { "location", location }
             };
 
             return new APIGatewayProxyResponse

@@ -12,32 +12,15 @@ namespace HelloWorld.Tests
 {
   public class FunctionTest
   {
-    private static readonly HttpClient client = new HttpClient();
-
-    private static async Task<string> GetLocation()
-    {
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Add("User-Agent", "AWS Lambda .Net Client");
-
-            var location = await client
-              .GetStringAsync("http://checkip.amazonaws.com/")
-              .ConfigureAwait(continueOnCapturedContext:false);
-
-            return location.Replace("\n","");
-    }
-
     [Fact]
     public async Task TestHelloWorldFunctionHandler()
     {
             var request = new APIGatewayProxyRequest();
             var context = new TestLambdaContext();
 
-            string location = GetLocation().Result;
-
             Dictionary<string, string> body = new Dictionary<string, string>
             {
                 { "message", "hello world" },
-                { "location", location },
             };
 
             var expectedResponse = new APIGatewayProxyResponse
@@ -51,9 +34,6 @@ namespace HelloWorld.Tests
             var response = await function
               .FunctionHandler(request, context)
               .ConfigureAwait(false);
-
-            Console.WriteLine("Lambda Response: \n" + response.Body);
-            Console.WriteLine("Expected Response: \n" + expectedResponse.Body);
 
             Assert.Equal(expectedResponse.Body, response.Body);
             Assert.Equal(expectedResponse.Headers, response.Headers);
