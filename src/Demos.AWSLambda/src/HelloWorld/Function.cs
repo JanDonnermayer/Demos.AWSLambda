@@ -21,11 +21,11 @@ namespace HelloWorld
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Add("User-Agent", "AWS Lambda .Net Client");
 
-            var msg = await client
+            var location = await client
                 .GetStringAsync("http://checkip.amazonaws.com/")
                 .ConfigureAwait(false);
 
-            return msg.Replace("\n","");
+            return location.Replace("\n","");
         }
 
         public async Task<APIGatewayProxyResponse> FunctionHandler(

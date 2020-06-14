@@ -14,15 +14,16 @@ namespace HelloWorld.Tests
   {
     private static readonly HttpClient client = new HttpClient();
 
-    private static async Task<string> GetCallingIP()
+    private static async Task<string> GetLocation()
     {
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Add("User-Agent", "AWS Lambda .Net Client");
 
-            var stringTask = client.GetStringAsync("http://checkip.amazonaws.com/").ConfigureAwait(continueOnCapturedContext:false);
+            var location = await client
+              .GetStringAsync("http://checkip.amazonaws.com/")
+              .ConfigureAwait(continueOnCapturedContext:false);
 
-            var msg = await stringTask;
-            return msg.Replace("\n","");
+            return location.Replace("\n","");
     }
 
     [Fact]
@@ -30,7 +31,9 @@ namespace HelloWorld.Tests
     {
             var request = new APIGatewayProxyRequest();
             var context = new TestLambdaContext();
-            string location = GetCallingIP().Result;
+
+            string location = GetLocation().Result;
+
             Dictionary<string, string> body = new Dictionary<string, string>
             {
                 { "message", "hello world" },
