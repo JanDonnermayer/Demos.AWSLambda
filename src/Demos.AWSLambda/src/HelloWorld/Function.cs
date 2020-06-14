@@ -16,7 +16,7 @@ namespace HelloWorld
     {
         private static readonly HttpClient client = new HttpClient();
 
-        private static async Task<string> GetCallingIP()
+        private static async Task<string> GetLocation()
         {
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Add("User-Agent", "AWS Lambda .Net Client");
@@ -33,7 +33,7 @@ namespace HelloWorld
             ILambdaContext context
         )
         {
-            var location = await GetCallingIP()
+            var location = await GetLocation()
                 .ConfigureAwait(false);
 
             var body = new Dictionary<string, string>
