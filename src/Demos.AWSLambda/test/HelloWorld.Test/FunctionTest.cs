@@ -45,7 +45,9 @@ namespace HelloWorld.Tests
             };
 
             var function = new Function();
-            var response = await function.FunctionHandler(request, context);
+            var response = await function
+              .FunctionHandler(request, context)
+              .ConfigureAwait(false);
 
             Console.WriteLine("Lambda Response: \n" + response.Body);
             Console.WriteLine("Expected Response: \n" + expectedResponse.Body);
