@@ -23,4 +23,3 @@
     sam init
 
 ## Setup Build & Deploy Pipeline
-
